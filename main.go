@@ -44,23 +44,23 @@ func init() {
 
 // Update player position if moved
 func movePlayer() {
-    if ebiten.IsKeyPressed(ebiten.KeyUp) {
-        playerOne.y -= playerOne.speed
-    }
-    if ebiten.IsKeyPressed(ebiten.KeyDown) {
-        playerOne.y += playerOne.speed
-    }
-    if ebiten.IsKeyPressed(ebiten.KeyLeft) {
-        playerOne.x -= playerOne.speed
-    }
-    if ebiten.IsKeyPressed(ebiten.KeyRight) {
-        playerOne.x += playerOne.speed
-    }
+	if ebiten.IsKeyPressed(ebiten.KeyUp) {
+		playerOne.y -= playerOne.speed
+	}
+	if ebiten.IsKeyPressed(ebiten.KeyDown) {
+		playerOne.y += playerOne.speed
+	}
+	if ebiten.IsKeyPressed(ebiten.KeyLeft) {
+		playerOne.x -= playerOne.speed
+	}
+	if ebiten.IsKeyPressed(ebiten.KeyRight) {
+		playerOne.x += playerOne.speed
+	}
 }
 
 // Update game state
 func update(screen *ebiten.Image) error {
-    movePlayer()
+	movePlayer()
 
 	if ebiten.IsDrawingSkipped() {
 		return nil
@@ -72,7 +72,7 @@ func update(screen *ebiten.Image) error {
 
 	playerOp := &ebiten.DrawImageOptions{}
 	playerOp.GeoM.Translate(playerOne.x, playerOne.y)
-    screen.DrawImage(playerOne.image, playerOp)
+	screen.DrawImage(playerOne.image, playerOp)
 
 	return nil
 }
