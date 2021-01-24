@@ -17,6 +17,7 @@ type player struct {
 // Set screen dimensions
 const (
 	screenWidth, screenHeight = 640, 480
+    diagFactor = 0.2
 )
 
 // Define space, ship and player
@@ -44,16 +45,18 @@ func init() {
 
 // Update player position if moved
 func movePlayer() {
-	if ebiten.IsKeyPressed(ebiten.KeyUp) {
+    sw, sh := ship.Size()
+    sw -= 22
+	if ebiten.IsKeyPressed(ebiten.KeyUp) && (playerOne.y - float64(sh / 2)) > 0 {
 		playerOne.y -= playerOne.speed
 	}
-	if ebiten.IsKeyPressed(ebiten.KeyDown) {
+	if ebiten.IsKeyPressed(ebiten.KeyDown) && (playerOne.y + float64(sh / 2)) < screenHeight {
 		playerOne.y += playerOne.speed
 	}
-	if ebiten.IsKeyPressed(ebiten.KeyLeft) {
-		playerOne.x -= playerOne.speed
+	if ebiten.IsKeyPressed(ebiten.KeyLeft) && (playerOne.x - float64(sw / 2)) > 0 {
+        playerOne.x -= playerOne.speed
 	}
-	if ebiten.IsKeyPressed(ebiten.KeyRight) {
+	if ebiten.IsKeyPressed(ebiten.KeyRight) && (playerOne.x + float64(sw / 2)) < screenWidth {
 		playerOne.x += playerOne.speed
 	}
 }
@@ -70,8 +73,9 @@ func update(screen *ebiten.Image) error {
 	spaceOp.GeoM.Translate(0, 0)
 	screen.DrawImage(space, spaceOp)
 
+    shipWidth, shipHeight := ship.Size()
 	playerOp := &ebiten.DrawImageOptions{}
-	playerOp.GeoM.Translate(playerOne.x, playerOne.y)
+	playerOp.GeoM.Translate(playerOne.x - float64(shipWidth / 2), playerOne.y - float64(shipHeight / 2))
 	screen.DrawImage(playerOne.image, playerOp)
 
 	return nil
